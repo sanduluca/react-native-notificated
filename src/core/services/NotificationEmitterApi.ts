@@ -25,11 +25,13 @@ export const notify: Notify = (
 
   if (typeof titleOrSetup === 'string') {
     setupObj = {
-      ...(typeof descriptionOrSetup === 'object' ? descriptionOrSetup : setup),
       params: {
         title: titleOrSetup,
         description: typeof descriptionOrSetup === 'string' ? descriptionOrSetup : undefined,
+        ...((typeof descriptionOrSetup === 'object' ? descriptionOrSetup.params : setup?.params) ||
+          {}),
       },
+      ...(typeof descriptionOrSetup === 'object' ? descriptionOrSetup : setup),
     }
   } else {
     setupObj = titleOrSetup
