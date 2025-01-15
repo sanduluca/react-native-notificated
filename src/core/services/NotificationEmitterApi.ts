@@ -15,12 +15,30 @@ export const remove: Remove = (id) => emitter.emit('remove_notification', { id }
 export const modify: Modify = (id: string, { params, config }) =>
   emitter.emit('modify_notification', { id, params, config })
 
-export const notify: Notify = (notificationType, setup) => {
+export const notify: Notify = (
+  notificationType: any,
+  titleOrSetup: any,
+  descriptionOrSetup?: any,
+  setup?: any
+) => {
+  let setupObj
+
+  if (typeof titleOrSetup === 'string') {
+    setupObj = {
+      ...(typeof descriptionOrSetup === 'object' ? descriptionOrSetup : setup),
+      params: {
+        title: titleOrSetup,
+        description: typeof descriptionOrSetup === 'string' ? descriptionOrSetup : undefined,
+      },
+    }
+  } else {
+    setupObj = titleOrSetup
+  }
   const id = generateNotificationId(notificationType.toString())
   emitter.emit('add_notification', {
     notificationType,
     id,
-    ...setup,
+    ...setupObj,
   })
   return {
     id,
