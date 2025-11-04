@@ -1,4 +1,4 @@
-import { AnimationCallback } from 'react-native-reanimated'
+import type { AnimationCallback } from 'react-native-reanimated'
 import { scheduleOnRN } from 'react-native-worklets'
 
 export const withAnimationCallbackJSThread = (

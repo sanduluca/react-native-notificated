@@ -1,5 +1,5 @@
 import { Easing, interpolate } from 'react-native-reanimated'
-import { CustomAnimationConfig } from 'src/types'
+import type { CustomAnimationConfig } from 'src/types'
 
 export const ZoomInDownZoomOutUp: CustomAnimationConfig = {
   animationConfigIn: {

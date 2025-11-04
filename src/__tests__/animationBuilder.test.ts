@@ -1,3 +1,4 @@
+import { useSharedValue } from 'react-native-reanimated'
 import { mergeStylesFunctions } from 'src/core/hooks/useAnimationAPI'
 import {
   AnimationBuilder,
@@ -19,7 +20,7 @@ describe('props merger tests', function () {
   it('should merge styles properly with add method', () => {
     const MoveDown = new AnimationBuilder(MoveDownAnimation)
     const MoveDownFadeInFadeOut = FadeInFadeOut.add(MoveDown).transitionInStylesQueue
-    const styles = mergeStylesFunctions(MoveDownFadeInFadeOut, { value: 1 })
+    const styles = mergeStylesFunctions(MoveDownFadeInFadeOut, useSharedValue(1))
 
     expect(styles).toMatchObject({
       opacity: 1,
@@ -37,7 +38,7 @@ describe('props merger tests', function () {
   it('should merge styles properly with add method outstyles', () => {
     const MoveUp = new AnimationBuilder(MoveUpAnimation)
     const MoveUpRotateZIn = RotateZIn.add(MoveUp).transitionOutStylesQueue
-    const styles = mergeStylesFunctions(MoveUpRotateZIn, { value: 1 })
+    const styles = mergeStylesFunctions(MoveUpRotateZIn, useSharedValue(1))
 
     expect(styles).toMatchObject({
       opacity: 1,
