@@ -1,7 +1,7 @@
 import { Easing, interpolate } from 'react-native-reanimated'
-import { generateAnimationConfig } from '../core/utils/generateAnimationConfig'
+import { CustomAnimationConfig } from 'src/types'
 
-export const ZoomInDownZoomOutUp = generateAnimationConfig({
+export const ZoomInDownZoomOutUp: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -20,9 +20,9 @@ export const ZoomInDownZoomOutUp = generateAnimationConfig({
       transform: [{ scale }, { translateY }],
     }
   },
-})
+}
 
-export const ZoomInDownZoomOutDown = generateAnimationConfig({
+export const ZoomInDownZoomOutDown: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'spring',
     config: {
@@ -52,9 +52,9 @@ export const ZoomInDownZoomOutDown = generateAnimationConfig({
       transform: [{ scale }, { translateY }],
     }
   },
-})
+}
 
-export const RotateInRotateOut = generateAnimationConfig({
+export const RotateInRotateOut: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -72,9 +72,9 @@ export const RotateInRotateOut = generateAnimationConfig({
       opacity: progress.value,
     }
   },
-})
+}
 
-export const RotateZIn = generateAnimationConfig({
+export const RotateZIn: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -100,9 +100,9 @@ export const RotateZIn = generateAnimationConfig({
       opacity: progress.value,
     }
   },
-})
+}
 
-export const SlideInLeftSlideOutRight = generateAnimationConfig({
+export const SlideInLeftSlideOutRight: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -130,9 +130,9 @@ export const SlideInLeftSlideOutRight = generateAnimationConfig({
       transform: [{ translateX }],
     }
   },
-})
+}
 
-export const CrazyAnimationConfig = generateAnimationConfig({
+export const CrazyAnimationConfig: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'spring',
     config: { damping: 10, velocity: 20, stiffness: 80, mass: 1.2 },
@@ -161,9 +161,9 @@ export const CrazyAnimationConfig = generateAnimationConfig({
       opacity: progress.value,
     }
   },
-})
+}
 
-export const VeryCustomTransition = generateAnimationConfig({
+export const VeryCustomTransition: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'spring',
     config: { damping: 10, velocity: 20, stiffness: 80, mass: 1.2 },
@@ -192,9 +192,9 @@ export const VeryCustomTransition = generateAnimationConfig({
       opacity: progress.value,
     }
   },
-})
+}
 
-export const DiagonalSlideInLeftSlideOutRight = generateAnimationConfig({
+export const DiagonalSlideInLeftSlideOutRight: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -221,9 +221,9 @@ export const DiagonalSlideInLeftSlideOutRight = generateAnimationConfig({
       opacity: progress.value,
     }
   },
-})
+}
 
-export const FadeInFadeOut = generateAnimationConfig({
+export const FadeInFadeOut: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -250,4 +250,4 @@ export const FadeInFadeOut = generateAnimationConfig({
       transform: [{ translateX }],
     }
   },
-})
+}

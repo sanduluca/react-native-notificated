@@ -9,8 +9,8 @@ import {
 } from '../stylesUtils'
 import { styles } from '../styles'
 import type { MergedNotificationStyleConfig, NotificationOwnProps } from '../types'
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { useNotificationController } from 'react-native-notificated'
+import { Pressable } from 'react-native-gesture-handler'
+import { useNotificationController } from '../../'
 
 export const NotificationBase = (props: NotificationOwnProps & MergedNotificationStyleConfig) => {
   const containerStyles = getContainerStyles({ ...props })
@@ -32,12 +32,12 @@ export const NotificationBase = (props: NotificationOwnProps & MergedNotificatio
 
   const renderRightIcon = () =>
     !props.hideCloseButton && (
-      <TouchableOpacity
+      <Pressable
         onPress={() => {
           remove()
         }}>
         <Image source={rightIconSource} style={styles.icon} />
-      </TouchableOpacity>
+      </Pressable>
     )
 
   const renderTitle = () => <Text style={titleStyle}>{props.title}</Text>
@@ -50,11 +50,11 @@ export const NotificationBase = (props: NotificationOwnProps & MergedNotificatio
 
   return (
     <View style={constShadow(props.theme, props.borderRadius)}>
-      <TouchableWithoutFeedback onPress={() => props.onPress?.()}>
+      <Pressable onPress={() => props.onPress?.()}>
         <View style={containerStyles}>
           {props.borderType === 'accent' && <View style={accentStyle} />}
           <View style={styles.content}>
-            {props.defaultIconType !== 'no-icon' && renderLeftIcon()}
+            {props.defaultIconType !== 'no-icon' ? renderLeftIcon() : null}
             <View style={styles.textWrapper}>
               {renderTitle()}
               {renderDescription()}
@@ -62,7 +62,7 @@ export const NotificationBase = (props: NotificationOwnProps & MergedNotificatio
             {renderRightIcon()}
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </View>
   )
 }

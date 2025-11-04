@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { useWindowDimensions } from 'react-native'
-import { PanGestureHandler } from 'react-native-gesture-handler'
+import { GestureDetector } from 'react-native-gesture-handler'
 import type { AnimationAPI } from '../hooks/useAnimationAPI'
 import type { NotificationState } from '../hooks/useNotificationsStates'
 import Animated from 'react-native-reanimated'
@@ -39,12 +39,15 @@ export const GestureHandler = ({
       notificationTopPosition,
     })
 
+  animationAPI.dragGestureHandler
+    .withRef(state.panHandlerRef)
+    .simultaneousWithExternalGesture(state.longPressHandlerRef)
+    .onEnd((event) => {
+      animationAPI.handleDragStateChange(event)
+    })
+
   return (
-    <PanGestureHandler
-      ref={state.panHandlerRef}
-      simultaneousHandlers={state.longPressHandlerRef}
-      onGestureEvent={animationAPI.dragGestureHandler}
-      onHandlerStateChange={animationAPI.handleDragStateChange}>
+    <GestureDetector gesture={animationAPI.dragGestureHandler}>
       <Animated.View
         onLayout={(e) => state.setNotificationHeight(e.nativeEvent.layout.height)}
         style={[
@@ -60,6 +63,6 @@ export const GestureHandler = ({
         ]}>
         {children}
       </Animated.View>
-    </PanGestureHandler>
+    </GestureDetector>
   )
 }

@@ -1,4 +1,5 @@
-import { AnimationCallback, runOnJS } from 'react-native-reanimated'
+import { AnimationCallback } from 'react-native-reanimated'
+import { scheduleOnRN } from 'react-native-worklets'
 
 export const withAnimationCallbackJSThread = (
   finishedAnimationCallback?: () => void,
@@ -11,9 +12,9 @@ export const withAnimationCallbackJSThread = (
     'worklet'
 
     if (finished) {
-      runOnJS(fcb)()
+      scheduleOnRN(fcb)
     } else {
-      runOnJS(nfcb)()
+      scheduleOnRN(nfcb)
     }
   }
 }

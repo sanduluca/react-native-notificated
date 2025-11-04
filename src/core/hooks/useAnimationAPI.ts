@@ -1,13 +1,12 @@
 import { useCallback } from 'react'
-import type { ViewStyle, TextStyle, ImageStyle } from 'react-native'
 import {
+  AnimatedStyle,
   cancelAnimation,
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
-  AnimateStyle,
 } from 'react-native-reanimated'
 import { useDrag } from './useDrag'
 import type { NotificationState } from './useNotificationsStates'
@@ -17,12 +16,14 @@ import { AnimationRange, TransitionStylesConfigFunction } from '../../types/anim
 import { useTimer } from './useTimer'
 import type { AnimationBuilder } from '../utils/generateAnimationConfig'
 
-type Styles = AnimateStyle<ViewStyle | TextStyle | ImageStyle>
+type Styles = AnimatedStyle
 
 const mergeStylesObjects = (styles: Styles, newStyles: Styles) => {
   'worklet'
 
+  // @ts-ignore TODO: fix this
   const oldTransform = [...(styles?.transform || [])]
+  // @ts-ignore TODO: fix this
   const newTransform = [...(newStyles?.transform || [])]
 
   return {
@@ -137,6 +138,7 @@ export const useAnimationAPI = ({
     transitionOutStylesQueue,
   } = animationConfig as AnimationBuilder
 
+  // @ts-ignore TODO: fix this
   const animatedStyles = useAnimatedStyle(() => {
     if (
       ['out', 'idle_active'].includes(currentTransitionType.value) &&

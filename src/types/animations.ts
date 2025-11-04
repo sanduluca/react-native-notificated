@@ -1,14 +1,11 @@
-import type { ImageStyle, TextStyle, ViewStyle } from 'react-native'
 import type {
-  AnimatedStyleProp,
+  AnimatedStyle,
   SharedValue,
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated'
 
-export type TransitionStylesConfigFunction = (
-  progress: SharedValue<number>
-) => AnimatedStyleProp<ViewStyle | TextStyle | ImageStyle>
+export type TransitionStylesConfigFunction = (progress: SharedValue<number>) => AnimatedStyle
 
 type SpringAnimationConfig = {
   type: 'spring'

@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
-import { PanGestureHandlerGestureEvent, State } from 'react-native-gesture-handler'
 import {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated'
+  Gesture,
+  GestureStateChangeEvent,
+  PanGestureHandlerEventPayload,
+  State,
+} from 'react-native-gesture-handler'
+import { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 import type { GestureConfig, DragDirection } from '../../types/gestures'
 import { shouldTriggerGesture } from '../gestures/shouldTriggerGesture'
 
@@ -19,33 +19,29 @@ export const useDrag = (config: GestureConfig) => {
     y.value = withSpring(0, { mass: 0.2 })
   }, [x, y])
 
-  const dragGestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { x: number; y: number }
-  >({
-    onStart: (_, ctx) => {
-      ctx.x = x.value
-      ctx.y = y.value
-    },
-    onActive: ({ translationX, translationY }, ctx) => {
-      x.value = ctx.x + translationX * directions.x
-      y.value = ctx.y + translationY * directions.y
-    },
-    onEnd: () => {
+  const dragGestureHandler = Gesture.Pan()
+    .onStart((event) => {
+      x.value = event.translationX
+      y.value = event.translationY
+    })
+    .onUpdate((event) => {
+      x.value = event.translationX + directions.x
+      y.value = event.translationY + directions.y
+    })
+    .onEnd(() => {
       x.value = withSpring(0, { mass: 0.2 })
       y.value = withSpring(0, { mass: 0.2 })
-    },
-  })
+    })
 
   const dragStateHandler = useCallback(
     (onDragSuccess: () => void, onDragFail: () => void) =>
-      (event: PanGestureHandlerGestureEvent) => {
-        const { nativeEvent } = event
-        if (nativeEvent.state !== State.END) return event
+      (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
+        const { state } = event
+        if (state !== State.END) return event
 
         const dragTriggered = shouldTriggerGesture(config, {
-          distance: [nativeEvent.translationX, nativeEvent.translationY],
-          velocity: [nativeEvent.velocityX, nativeEvent.velocityY],
+          distance: [event.translationX, event.translationY],
+          velocity: [event.velocityX, event.velocityY],
         })
 
         if (dragTriggered) onDragSuccess()

@@ -1,6 +1,6 @@
 import { createNotifications } from './core/createNotifications'
 import { modify, notify, remove, useNotifications } from './core/services/NotificationEmitterApi'
-import { generateAnimationConfig, AnimationBuilder } from './core/utils/generateAnimationConfig'
+import { AnimationBuilder } from './core/utils/generateAnimationConfig'
 
 import { defaultVariants } from './defaultConfig/defaultConfig'
 import { useNotificationController } from './hooks/useNotificationController'
@@ -24,7 +24,6 @@ export { defaultVariants }
 
 // animations
 export {
-  generateAnimationConfig,
   AnimationBuilder,
   ZoomInZoomOut,
   ZoomInDownZoomOutDown,

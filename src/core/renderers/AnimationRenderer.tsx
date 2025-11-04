@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import Animated from 'react-native-reanimated'
-import { LongPressGestureHandler } from 'react-native-gesture-handler'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import { Platform, View } from 'react-native'
 import type { NotificationState } from '../hooks/useNotificationsStates'
 import type { AnimationAPI } from '../hooks/useAnimationAPI'
@@ -17,20 +17,23 @@ type Props = {
 }
 
 export const AnimationRenderer = ({ children, animationAPI, state }: Props) => {
+  const longPressGesture = Gesture.LongPress()
+    .minDuration(800)
+    .maxDistance(Constants.maxLongPressDragDistance)
+    .simultaneousWithExternalGesture(state.panHandlerRef)
+    .onEnd(animationAPI.revokeTransitionAnimation)
+    .onStart(animationAPI.cancelTransitionAnimation)
+  if (state?.longPressHandlerRef) {
+    longPressGesture.withRef(state.longPressHandlerRef)
+  }
   return (
     <Animated.View
-      style={[animationAPI.animatedStyles]}
+      style={animationAPI.animatedStyles}
       needsOffscreenAlphaCompositing={Platform.OS === 'android'}>
       {state.notificationEvent && (
-        <LongPressGestureHandler
-          minDurationMs={800}
-          ref={state.longPressHandlerRef}
-          simultaneousHandlers={state.panHandlerRef}
-          maxDist={Constants.maxLongPressDragDistance}
-          onEnded={animationAPI.revokeTransitionAnimation}
-          onActivated={animationAPI.cancelTransitionAnimation}>
+        <GestureDetector gesture={longPressGesture}>
           <View style={styles.boxWrapper}>{children}</View>
-        </LongPressGestureHandler>
+        </GestureDetector>
       )}
     </Animated.View>
   )

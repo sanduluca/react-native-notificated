@@ -6,8 +6,8 @@ import { queueReducer } from '../utils/queueReducer'
 import { useStatusBarHeightDetector } from './useStatusBarHeightDetector'
 
 export const useNotificationsStates = () => {
-  const panHandlerRef = useRef(null)
-  const longPressHandlerRef = useRef(null)
+  const panHandlerRef = useRef(undefined)
+  const longPressHandlerRef = useRef(undefined)
   const { height: windowHeight, width: windowWidth } = useWindowDimensions()
   const isPortraitMode = windowHeight > windowWidth
   const { statusBarHeight } = useStatusBarHeightDetector({ isPortraitMode })

@@ -349,9 +349,3 @@ export const DiagonalSlideInLeftSlideOutRight = new AnimationBuilder(
 )
 export const ZoomInDownZoomOutDown = new AnimationBuilder(ZoomInAnimation).add(MoveDown)
 export const ZoomInDownZoomOutUp = new AnimationBuilder(ZoomInZoomOut).add(MoveUp)
-/**
- * @deprecated since version > 0.0.1-beta.2
- */
-export const generateAnimationConfig = (config: CustomAnimationConfig): CustomAnimationConfig => {
-  return config
-}

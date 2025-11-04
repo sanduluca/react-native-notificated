@@ -10,13 +10,13 @@ import {
 import { styles } from './styles'
 import { AnimationButton } from '../components/basicExamples/AnimationButton'
 import { Easing } from 'react-native-reanimated'
-import { generateAnimationConfig } from '../../../src/core/utils/generateAnimationConfig'
+import { CustomAnimationConfig } from 'src/types'
 
 const { useNotifications, NotificationsProvider } = createNotifications({
   isNotch: true,
 })
 
-const CustomFadeInFadeOut = generateAnimationConfig({
+const CustomFadeInFadeOut: CustomAnimationConfig = {
   animationConfigIn: {
     type: 'timing',
     config: {
@@ -44,7 +44,7 @@ const CustomFadeInFadeOut = generateAnimationConfig({
       transform: [{ translateX }],
     }
   },
-})
+}
 
 export const AnimationsExamples = () => {
   const { notify } = useNotifications()
