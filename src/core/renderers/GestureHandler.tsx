@@ -7,6 +7,7 @@ import Animated from 'react-native-reanimated'
 import { styles } from '../utils/styles'
 import { Constants } from '../config'
 import { calculateNotificationPositionCoordintates } from '../utils/calculateNotificationPositionCoordintates'
+import { scheduleOnRN } from 'react-native-worklets'
 
 type Props = {
   children: ReactNode
@@ -43,7 +44,8 @@ export const GestureHandler = ({
     .withRef(state.panHandlerRef)
     .simultaneousWithExternalGesture(state.longPressHandlerRef)
     .onEnd((event) => {
-      animationAPI.handleDragStateChange(event)
+      'worklet'
+      scheduleOnRN(animationAPI.handleDragStateChange, event)
     })
 
   return (
