@@ -6,6 +6,7 @@ import type { CreateNotificationsReturnType, NotificationsConfig, VariantsMap } 
 import { NotificationsRenderer } from './renderers/NotificationsRenderer'
 import { NotificationContext } from './hooks/useNotificationConfig'
 import type { DefaultVariants } from '../defaultConfig/types'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export const createNotifications = <V extends VariantsMap = DefaultVariants>(
   config?: Partial<NotificationsConfig<V>>
@@ -15,10 +16,12 @@ export const createNotifications = <V extends VariantsMap = DefaultVariants>(
 
   const NotificationsProvider = ({ children = null }: { children?: ReactNode }) => {
     return (
-      <NotificationContext.Provider value={{ ...InAppNotificationsConfig, ...config }}>
-        {children}
-        <NotificationsRenderer />
-      </NotificationContext.Provider>
+      <GestureHandlerRootView>
+        <NotificationContext.Provider value={{ ...InAppNotificationsConfig, ...config }}>
+          {children}
+          <NotificationsRenderer />
+        </NotificationContext.Provider>
+      </GestureHandlerRootView>
     )
   }
 
@@ -30,13 +33,15 @@ export const createNotifications = <V extends VariantsMap = DefaultVariants>(
     notificationTopPosition?: number
   }) => {
     return (
-      <NotificationContext.Provider value={{ ...InAppNotificationsConfig, ...config }}>
-        {children}
-        <NotificationsRenderer
-          isModalProvider={true}
-          notificationTopPosition={notificationTopPosition}
-        />
-      </NotificationContext.Provider>
+      <GestureHandlerRootView>
+        <NotificationContext.Provider value={{ ...InAppNotificationsConfig, ...config }}>
+          {children}
+          <NotificationsRenderer
+            isModalProvider={true}
+            notificationTopPosition={notificationTopPosition}
+          />
+        </NotificationContext.Provider>
+      </GestureHandlerRootView>
     )
   }
 
