@@ -40,12 +40,14 @@ export const GestureHandler = ({
       notificationTopPosition,
     })
 
+  const { handleDragStateChange } = animationAPI
+
   animationAPI.dragGestureHandler
     .withRef(state.panHandlerRef)
     .simultaneousWithExternalGesture(state.longPressHandlerRef)
     .onEnd((event) => {
       'worklet'
-      scheduleOnRN(animationAPI.handleDragStateChange, event)
+      scheduleOnRN(handleDragStateChange, event)
     })
 
   return (
